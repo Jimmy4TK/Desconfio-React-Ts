@@ -48,7 +48,7 @@ export class ErrorHandler {
       for (const error of data.response.data.messages) {
         this.errors.set(error.path, error.message)
       }
-    } else if (typeof data.response.data.message) {
+    } else if (data.response.data.message!==undefined) {
       this.errors.set(data.response.data.message!.path, data.response.data.message!.message)
     } else if (typeof data.response.data.error === "string") {
       this.errorMessage = data.response.data.error

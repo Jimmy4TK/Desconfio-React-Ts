@@ -1,0 +1,19 @@
+.list{
+    height: 85px;
+}
+.players{
+    display: inline-flex;
+    max-width: 420px;
+    overflow: hidden;
+    white-space: nowrap;
+    position:relative;
+    right:-15% !important;
+}
+.enter{
+    position:relative;
+    left:86% !important;
+}
+.start{
+    position:relative;
+    right:11% !important;
+}

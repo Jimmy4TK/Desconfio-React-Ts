@@ -28,7 +28,7 @@ export default function NavBarMenu() {
       <Navbar.Brand className="ms-2 me-5">Desconfio</Navbar.Brand>
         <Nav className="me-auto ms-0">
           <NavLink className="navlink" to="/">Welcome</NavLink>&nbsp;&nbsp;
-          <NavLink className="navlink" to="/game">Game</NavLink>&nbsp;&nbsp;
+          <NavLink className="navlink" to="/menu">Game</NavLink>&nbsp;&nbsp;
           {menu}&nbsp;&nbsp;
         </Nav>
   </Navbar>

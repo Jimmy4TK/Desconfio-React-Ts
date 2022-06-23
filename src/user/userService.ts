@@ -53,7 +53,7 @@ export async function changePassword(params: {
   confirm_password: string
 }): Promise<void> {
   try {
-    await axios.post(http.backendUrl + "/users/"+params.id+"/change_password", params)
+    await axios.put(http.backendUrl + "/users/"+params.id+"/change_password", params)
     return
   } catch (err) {
     const axiosError = err as AxiosError
