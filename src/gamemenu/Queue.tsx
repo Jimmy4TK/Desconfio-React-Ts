@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Container, Table } from 'react-bootstrap';
 import GlobalContent from '../common/components/GlobalContent';
 import { useSessionGame } from '../store/gameStore';
-import { Check_player } from './gameService';
+import { Reload } from './gameService';
 import ModalGame from './ModalGame';
 
 export default function Queue(props:any){
@@ -18,20 +18,20 @@ export default function Queue(props:any){
     });
 
     function actionHandler(){
-        if(game==undefined){
-            setCount(0)
-        }else{
+        if(game!=undefined){
             if(game.state=='waiting_player'){
                 updatingGame()
                 setCount(count+1)
             } else if(game.state=='in_game'){
-                history('/gameonline')
+                history('/game')
             }
+        }else{
+            setTimeout(()=>setCount(0),3000)
         }
     }
     
     async function updatingGame(){
-        game= await Check_player(game!.id);
+        game= await Reload(game!.id);
     }
 
     function switchState(){
@@ -46,7 +46,7 @@ export default function Queue(props:any){
     }
 
     const state=switchState();
-    const modal= count===0? <ModalGame /> : <div></div>
+    const modal= count===0 ? <ModalGame /> : <div></div>
 
 
     return(
@@ -63,10 +63,10 @@ export default function Queue(props:any){
                             <td>State: {state}</td>
                         </tr>
                         <tr>
-                            <td>First player: {game?.player1}</td>
+                            <td>First player: {game?.player1.name}</td>
                         </tr>
                         <tr>
-                            <td>Second player: {game?.player2}</td>
+                            <td>Second player: {game?.player2 == undefined ? '' : game?.player2.name}</td>
                         </tr>
                     </tbody>
                 </Table>

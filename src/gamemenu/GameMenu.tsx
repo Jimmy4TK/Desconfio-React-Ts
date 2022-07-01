@@ -41,7 +41,7 @@ export default function OnlineMenu(){
             <div className="d-flex flex-row">
                 <div><Button className="ms-2 mt-2 btn btn-dark" onClick={CreateGame}>Create New Online Game</Button></div>
                 <div className='ms-5 col-8'>
-                {games?.games.map((game)=>(renderListGames(game.id,game.player1)))}
+                {games?.games.map((game)=>(renderListGames(game.id,game.player1.name)))}
                 <div className='mt-5 col-5 mx-auto'><DangerLabel message={errorHandler.errorMessage} /></div>
                 </div>
             </div>

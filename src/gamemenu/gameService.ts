@@ -2,18 +2,30 @@ import axios, { AxiosError } from "axios"
 import { http } from "../common/http"
 import { updateSessionGames } from "../store/gamesStore"
 import { updateSessionGame } from "../store/gameStore"
+import { User } from "../user/userService"
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 axios.defaults.headers.common["Content-Type"] = "application/json"
 
-export interface Game {
+  export interface Game {
     id: number
-    player1: string
-    player2: string
     state: string
+    player1: User
+    player2: User
+    turn: boolean
+    suit: string
+    discard_pile: number
+    cards_player1: Array<Card>
+    cards_player2: Array<Card>
   }
   export interface Games {
     games: Array<Game>
+  }
+  export interface Card{
+    id: number
+    number: number
+    suit: string
+    user_id: User["id"]
   }
   
   export async function Create_game(params:{token: string | undefined}):Promise<Game>{
@@ -30,7 +42,7 @@ export interface Game {
     }
   }
   
-  export async function Check_player(id:number):Promise<Game>{
+  export async function Reload(id:number):Promise<Game>{
     const res = (
         await axios.get(http.backendUrl + "/games/"+ id)
     ).data as Game
@@ -66,3 +78,20 @@ export interface Game {
     }
   }
   
+  export async function Drop_card(id:number,params:{card_id: number}):Promise<Game>{
+    const res = (
+      await axios.post(http.backendUrl + "/games/"+ id+"/drop_card",params)
+    ).data as Game
+    localStorage.setItem("game", JSON.stringify(res))
+    updateSessionGame(res)
+    return res
+  }
+
+  export async function Desconfio(id:number):Promise<Game>{
+    const res = (
+      await axios.get(http.backendUrl + "/games/"+ id+"/desconfio")
+    ).data as Game
+    localStorage.setItem("game", JSON.stringify(res))
+    updateSessionGame(res)
+    return res
+  }
